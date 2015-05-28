@@ -19,6 +19,7 @@ public class ManifestException extends CargoException {
 	 */
 	public ManifestException(String message) {
 		//Implementation Here
+		super(message);
 	}
 
 }
