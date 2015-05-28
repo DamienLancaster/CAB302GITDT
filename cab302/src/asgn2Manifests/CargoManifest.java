@@ -44,6 +44,19 @@ import asgn2Exceptions.ManifestException;
  * @version 1.0
  */
 public class CargoManifest {
+int weightmax;
+int stacknum;
+int heightmax;
+int totalspace;
+int occupiedspace = 0;
+ArrayList<FreightContainer> containerlist = new ArrayList<FreightContainer>();
+//ArrayList<FreightContainer> containercode = new ArrayList<FreightContainer>();
+ArrayList<Integer> containerstacknum = new ArrayList<Integer>();
+ArrayList<Integer> containerstackheight = new ArrayList<Integer>();
+ArrayList<Integer> stacktype = new ArrayList<Integer>();
+ArrayList<Integer> stackheight = new ArrayList<Integer>();
+
+
 
 	/**
 	 * Constructs a new cargo manifest in preparation for a voyage.
@@ -65,6 +78,16 @@ public class CargoManifest {
 	public CargoManifest(Integer numStacks, Integer maxHeight, Integer maxWeight)
 	throws ManifestException {
 		//Implementation Here
+		if (numStacks < 0 || maxHeight < 0 || maxWeight < 0) {
+			throw new ManifestException("Negative value entered");
+		}
+		stacknum = numStacks;
+		heightmax = maxHeight;
+		weightmax = maxWeight;
+		totalspace = maxHeight * numStacks;
+		for (int i = 0; i < numStacks; i++) {
+			stacktype.add(0); 
+		}
 	}
 
 	/**
@@ -79,6 +102,56 @@ public class CargoManifest {
 	 */
 	public void loadContainer(FreightContainer newContainer) throws ManifestException {
 		//Implementation Here
+		if (newContainer.getGrossWeight() >= weightmax) {
+			throw new ManifestException("Container is too heavy");
+		}
+		else if (occupiedspace == totalspace) {
+			throw new ManifestException("The ship is full");			
+		}
+		for (int num = 0; num < containerlist.size();num++) {
+			if (newContainer.getCode() == containerlist.get(num).getCode()) {
+				throw new ManifestException("Container is already on board");	
+			}
+		}
+		occupiedspace++;
+		String containerclass = newContainer.getClass().getName();
+		int i= 0;
+		int continuesearch = 0;
+		while (i < stacknum && continuesearch == 1) {
+			if (stacktype.get(stacknum) == 0) {
+				containerstacknum.add(stacknum);
+				continuesearch = 0;
+				if (containerclass == "GeneralGoodsContainer"){
+					stacktype.set(1, stacknum);
+				}
+				else if (containerclass == "RefrigeratedContainer"){
+					stacktype.set(2, stacknum);
+				}
+				if (containerclass == "RefrigeratedContainer"){
+					stacktype.set(3, stacknum);
+				}
+				stacktype.set(1,stacknum);
+			}
+			else if (stacktype.get(stacknum) == 1 && containerclass == "GeneralGoodsContainer"){
+				containerstacknum.add(stacknum);
+				continuesearch = 0;
+			}
+			else if (stacktype.get(stacknum) == 2 && containerclass == "RefrigeratedContainer"){
+				containerstacknum.add(stacknum);
+				continuesearch = 0;
+			}
+			else if (stacktype.get(stacknum) == 3 && containerclass == "RefrigeratedContainer"){
+				containerstacknum.add(stacknum);
+				continuesearch = 0;
+			}
+			i++;
+		}
+		if (continuesearch == 1) {
+			throw new ManifestException("no space available");
+		}
+		containerlist.add(newContainer);
+		containerstacknum.add((occupiedspace + heightmax - 1) / heightmax);
+		containerstackheight.add(occupiedspace % heightmax);
 	}
 
 	/**
@@ -92,7 +165,25 @@ public class CargoManifest {
 	 */
 	public void unloadContainer(ContainerCode containerId) throws ManifestException {
 		//Implementation Here
+		int containernum = 0;
+		int error = 1;
+		for (int num = 0; num < containerlist.size(); num++ ){
+			if (containerId == containerlist.get(num).getCode()) {
+				containernum = num;
+				error = 0;
+			}
+		}
+		if (containernum != heightmax || containernum != occupiedspace) {
+			throw new ManifestException("The container is not at the top of the stack");
+		}
+		else if (error == 1) {
+			throw new ManifestException("The container is not on board");
+		}
+		containerlist.remove(containernum );
+		containerstacknum.remove(containernum);
+		containerstackheight.add(containernum);
 	}
+	
 
 	
 	/**
@@ -107,6 +198,21 @@ public class CargoManifest {
 	 */
 	public Integer whichStack(ContainerCode queryContainer) {
 		//Implementation Here
+		int error = 1;
+		int containernum = 0;
+		for (int num = 0; num < containerlist.size(); num++ ){
+			if (queryContainer == containerlist.get(num).getCode()) {
+				containernum = num;
+				error = 0;
+			}
+		}
+		if (error == 0) {
+			return containerstacknum.get(containernum);
+		}
+		else {
+			return null;
+		}
+		
 	}
 
 	
@@ -124,6 +230,20 @@ public class CargoManifest {
 	 */
 	public Integer howHigh(ContainerCode queryContainer) {
 		//Implementation Here
+		int error = 1;
+		int containernum = 0;
+		for (int num = 0; num < containerlist.size(); num++ ){
+			if (queryContainer == containerlist.get(num).getCode()) {
+				containernum = num;
+				error = 0;
+			}
+		}
+		if (error == 0) {
+			return containerstackheight.get(containernum);
+		}
+		else {
+			return null;
+		}
 	}
 
 
@@ -135,13 +255,27 @@ public class CargoManifest {
 	 * @return the stack's freight containers as an array
 	 * @throws ManifestException if there is no such stack on the ship
 	 */
+	@SuppressWarnings("null")
 	public FreightContainer[] toArray(Integer stackNo) throws ManifestException {
 		//Implementation Here
+		if (stackNo > stacknum || stackNo < 0) {
+			throw new ManifestException("No such stack");
+		}
+		FreightContainer[] stacklist = null;
+		for (int i = 0; i < occupiedspace; i++) {
+			if (containerstacknum.get(i) == stackNo){
+				stacklist[i] = containerlist.get(i);
+			}
+		}
+		return stacklist;
 	}
+
+		
+	
 
 	
 	/* ***** toString methods added to support the GUI ***** */
-	
+	/*
 	public String toString(ContainerCode toFind) {
 		//Some variables here are used and not declared. You can work it out 
 		String toReturn = "";
@@ -166,4 +300,6 @@ public class CargoManifest {
 	public String toString() {
 		return toString(null);
 	}
+*/
+
 }
