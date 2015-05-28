@@ -137,25 +137,10 @@ public class ContainerCode {
 			//totalint[i] = (int) a_char;
 			
 		}
-<<<<<<< HEAD
 		if (charsint[10] != smallestnumber) {
 			throw new InvalidCodeException("check digit is not correct");
 		}
 		codeStr = code;
-=======
-		
-			//Check Digit adds sum and sees if its valid
-		Private static boolean checkR (String code){
-			
-			int letterNo = code.at(i) - 'A';
-			for (int 1=0; i > 10; i++){
-				
-			}
-		}
-		//int letterNo = code.at(i) - 'A'
-		}
-		
->>>>>>> origin/patch-1
 	}
 
 
