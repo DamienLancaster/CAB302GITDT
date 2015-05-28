@@ -18,6 +18,7 @@ public class InvalidCodeException extends CargoException {
 	 */
 	public InvalidCodeException(String message) {
 		//Implementation Here
+		super(message);
 	}
 
 }
