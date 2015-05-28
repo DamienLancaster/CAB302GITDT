@@ -20,5 +20,6 @@ public abstract class CargoException extends Exception {
 	 */
 	public CargoException(String message) {
 		//Implementation Here
+		super(message);
 	}
 }

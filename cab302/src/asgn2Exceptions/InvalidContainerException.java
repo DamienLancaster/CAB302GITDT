@@ -18,6 +18,7 @@ public class InvalidContainerException extends CargoException {
 	 */
 	public InvalidContainerException(String message) {
 		//Implementation Here
+		super(message);
 	}
 
 }
