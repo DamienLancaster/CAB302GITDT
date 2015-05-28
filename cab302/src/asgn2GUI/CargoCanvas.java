@@ -14,7 +14,7 @@ import asgn2Manifests.CargoManifest;
 /**
  * Creates a JPanel in which graphical components are laid out to represent the cargo manifest.
  *
- * @author CAB302.
+ * @author CAB302. Torrin Griffiths
  */
 public class CargoCanvas extends JPanel {
 
@@ -54,7 +54,11 @@ public class CargoCanvas extends JPanel {
      */
     @Override
     public void paint(Graphics g) {
-    	//Implementation here 
+    	super.paintComponent(g);
+    	g.setColor(Color.GRAY);
+		  g.drawRect(20, 20, 200, 100);
+		  g.fillRect(20, 20, 200, 100);
+    	
     }
 
     /**
@@ -68,6 +72,8 @@ public class CargoCanvas extends JPanel {
      */
     private void drawContainer(Graphics g, FreightContainer container, int x, int y) {
     	//Implementation here 
+    	
+    	
     	//Feel free to use some other method structure here, but this is the basis for the demo. 
     	//Obviously you need the graphics context and container as parameters. 
     	//But you can also use images if you wish. 
