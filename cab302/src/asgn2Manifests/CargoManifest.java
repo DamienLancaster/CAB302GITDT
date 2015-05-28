@@ -173,7 +173,7 @@ ArrayList<Integer> stackheight = new ArrayList<Integer>();
 				error = 0;
 			}
 		}
-		if (containernum != heightmax || containernum != occupiedspace) {
+		if (containerstackheight.get(containernum)%stacknum != heightmax  || containerstackheight.get(containernum) != occupiedspace) {
 			throw new ManifestException("The container is not at the top of the stack");
 		}
 		else if (error == 1) {
@@ -207,7 +207,7 @@ ArrayList<Integer> stackheight = new ArrayList<Integer>();
 			}
 		}
 		if (error == 0) {
-			return containerstacknum.get(containernum);
+			return containerstacknum.get(containernum)+1;
 		}
 		else {
 			return null;
@@ -239,7 +239,7 @@ ArrayList<Integer> stackheight = new ArrayList<Integer>();
 			}
 		}
 		if (error == 0) {
-			return containerstackheight.get(containernum);
+			return containerstackheight.get(containernum) + 1;
 		}
 		else {
 			return null;
@@ -261,7 +261,7 @@ ArrayList<Integer> stackheight = new ArrayList<Integer>();
 		if (stackNo > stacknum || stackNo < 0) {
 			throw new ManifestException("No such stack");
 		}
-		FreightContainer[] stacklist = null;
+		FreightContainer[] stacklist = new FreightContainer[stacknum];
 		for (int i = 0; i < occupiedspace; i++) {
 			if (containerstacknum.get(i) == stackNo){
 				stacklist[i] = containerlist.get(i);

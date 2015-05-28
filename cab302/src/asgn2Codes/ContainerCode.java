@@ -1,6 +1,7 @@
 package asgn2Codes;
 
 import asgn2Exceptions.InvalidCodeException;
+//import math.floor;
 
 /* Note to self:
  * Use option "-noqualifier java.lang" when generating Javadoc from this
@@ -92,7 +93,7 @@ public class ContainerCode {
 	public ContainerCode(String code) throws InvalidCodeException {
 		//Implementation Here
 		Integer lengthCode = code.length();
-		if (code == null || codeStr.equals("")){
+		if (code == null || code.equals("")){
 			throw new InvalidCodeException("no entry");
 		}//end if
 		else if (lengthCode > 11){
@@ -110,6 +111,8 @@ public class ContainerCode {
 		if (idU != 3){
 			throw new InvalidCodeException("no identifier");
 		}// end if
+		
+		/*
 		int[] charsint = new int[10];
 		//int letterNo = code.at(i) - 'A';
 		for (int i=0; i > 11; i++){
@@ -140,6 +143,36 @@ public class ContainerCode {
 		if (charsint[10] != smallestnumber) {
 			throw new InvalidCodeException("check digit is not correct");
 		}
+		*/
+		
+		double numdouble = 0;
+		String charCode = "0123456789A?BCDEFGHIJK?LMNOPQRSTU?VWXYZ";
+		char[] segmentcode = code.toCharArray();
+		int chkdg = segmentcode[10];
+		for (Integer i = 0; i < 10; i++) {
+			int charint = segmentcode[i] == '?' ? -1 : charCode.indexOf(segmentcode[i]);
+			if (charint < 0) {
+				//return false;
+				throw new InvalidCodeException("code is not correct");
+			}
+			int mult = 1;
+			if (i != 0) {
+			for (int j = 0; j < i; j++) {
+				mult = mult * 2;
+			} 
+			}
+			charint = charint * mult;
+			numdouble += charint;
+		}
+		int numint = (int)(numdouble /11);
+		numint = numint*11;
+		int num = (int)numdouble - numint;
+		
+		// num = 5;
+		if ((int)segmentcode[10] == num) {
+			throw new InvalidCodeException("check digit is not correct");
+		}
+		
 		codeStr = code;
 	}
 

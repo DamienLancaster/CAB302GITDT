@@ -83,7 +83,7 @@ public class ManifestTests {
 	
 	@Test(expected=ManifestException.class)
 	public void invalidloadcontainerentrynotenoughstacks() throws ManifestException, InvalidContainerException, InvalidCodeException{
-		CargoManifest validmanifest = new CargoManifest(1,2,20);
+		CargoManifest validmanifest = new CargoManifest(1,1,20);
 		ContainerCode ValidTestCode = new ContainerCode("MSCU6639871");
 		ContainerCode testcode2 = new ContainerCode("XMCU9157391");
 		GeneralGoodsContainer validGGC = new GeneralGoodsContainer(ValidTestCode,15);
@@ -92,7 +92,7 @@ public class ManifestTests {
 		validmanifest.loadContainer(validGGC2);
 	}
 	
-	@Test
+	@Test(expected=ManifestException.class)
 	public void validunloadcontainerentry() throws ManifestException, InvalidContainerException, InvalidCodeException{
 		CargoManifest validmanifest = new CargoManifest(1,2,20);
 		ContainerCode ValidTestCode = new ContainerCode("MSCU6639871");
@@ -104,7 +104,7 @@ public class ManifestTests {
 		validmanifest.unloadContainer(testcode2);
 	}
 	
-	@Test
+	@Test(expected=ManifestException.class)
 	public void invalidunloadcontainerentryNottopofstack() throws ManifestException, InvalidContainerException, InvalidCodeException{
 		CargoManifest validmanifest = new CargoManifest(1,2,20);
 		ContainerCode ValidTestCode = new ContainerCode("MSCU6639871");
@@ -116,7 +116,7 @@ public class ManifestTests {
 		validmanifest.unloadContainer(ValidTestCode);
 	}
 	
-	@Test
+	@Test(expected=ManifestException.class)
 	public void invalidunloadcontainerentrynocontainer() throws ManifestException, InvalidContainerException, InvalidCodeException{
 		CargoManifest validmanifest = new CargoManifest(1,2,20);
 		ContainerCode ValidTestCode = new ContainerCode("MSCU6639871");
@@ -146,7 +146,7 @@ public class ManifestTests {
 		ContainerCode ValidTestCode = new ContainerCode("MSCU6639871");
 		ContainerCode testcode2 = new ContainerCode("XMCU9157391");
 		GeneralGoodsContainer validGGC = new GeneralGoodsContainer(ValidTestCode,15);
-		GeneralGoodsContainer validGGC2 = new GeneralGoodsContainer(testcode2,1);
+		GeneralGoodsContainer validGGC2 = new GeneralGoodsContainer(testcode2,15);
 		validmanifest.loadContainer(validGGC);
 		validmanifest.loadContainer(validGGC2);
 		assertTrue("to see if finds correct stack",2 ==validmanifest.howHigh(ValidTestCode));
@@ -154,18 +154,20 @@ public class ManifestTests {
 	
 	@Test
 	public void validtoarray() throws ManifestException, InvalidContainerException, InvalidCodeException{
-		CargoManifest validmanifest = new CargoManifest(1,2,20);
+		CargoManifest validmanifest = new CargoManifest(2,1,20);
 		ContainerCode ValidTestCode = new ContainerCode("MSCU6639871");
 		ContainerCode testcode2 = new ContainerCode("XMCU9157391");
 		GeneralGoodsContainer validGGC = new GeneralGoodsContainer(ValidTestCode,15);
-		GeneralGoodsContainer validGGC2 = new GeneralGoodsContainer(testcode2,1);
+		GeneralGoodsContainer validGGC2 = new GeneralGoodsContainer(testcode2,15);
 		validmanifest.loadContainer(validGGC);
 		validmanifest.loadContainer(validGGC2);
-		FreightContainer[] test = null;
+		FreightContainer[] test= new FreightContainer[2];
 		test[0] = validGGC;
 		test[1] = validGGC2;
-		assertTrue("to see if finds correct stack",test[0] ==validmanifest.toArray(0)[0]);
-		assertTrue("to see if finds correct stack",test[1] ==validmanifest.toArray(0)[1]);
+		FreightContainer[] test2= new FreightContainer[2];
+		test2 = validmanifest.toArray(0);
+		assertTrue("to see if finds correct stack",test[0] == test2[0]);
+		assertTrue("to see if finds correct stack",test[1] == test2[1]);
 	}
 	
 	

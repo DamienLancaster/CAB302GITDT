@@ -24,7 +24,7 @@ import asgn2Exceptions.InvalidContainerException;
 public class ContainerTests {
 	//Implementation Here - includes tests for ContainerCode and for the actual container classes. 
 	//container code tests
-	String validcode = "MSCU6639871";
+	String validcode = "KOCU8090115";
 	//ContainerCode ValidTestCode = new ContainerCode(validcode);
 	@Test
 	public void validcontainercodeentry() throws InvalidCodeException{
@@ -227,4 +227,3 @@ public class ContainerTests {
 		assertTrue("test to see if returns correct category", category == validDC.getCategory());
 	}
 }
-
