@@ -18,7 +18,7 @@ import asgn2Manifests.CargoManifest;
 /**
  * The main window for the Cargo Manifest graphics application.
  *
- * @author CAB302
+ * @author CAB302 , Torrin Griffiths
  */
 public class CargoFrame extends JFrame {
 
@@ -105,7 +105,17 @@ public class CargoFrame extends JFrame {
             }
         });
         btnUnload = createButton("Unload", new ActionListener() {
-        	//implementation here    
+        	@Override
+            public void actionPerformed(ActionEvent e) {
+                Runnable doRun = new Runnable() {
+                    @Override
+                    public void run() {
+                        CargoFrame.this.resetCanvas();
+                        CargoFrame.this.doUnload();
+                    }
+                };
+                SwingUtilities.invokeLater(doRun);
+            }
         });
         btnFind = createButton("Find", new ActionListener() {
         	//implementation here    
@@ -145,14 +155,15 @@ public class CargoFrame extends JFrame {
      * Initiate the New Manifest dialog which sets the instance of CargoManifest to work with.
      */
     private void setNewManifest() {
-    	//implementation here    
+    	    
     }
 
     /**
      * Turns off container highlighting when an action other than Find is initiated.
      */
     private void resetCanvas() {
-    	//implementation here    
+    	canvas = new cargoCanvas();
+        add(canvas, BorderLayout.CENTER);    
     }
 
     /**
