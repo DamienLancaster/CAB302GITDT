@@ -74,7 +74,7 @@ import asgn2Exceptions.InvalidCodeException;
  * i.e., '<code>1</code>', thus confirming that container code 
  * <code>MSCU6639871</code> is valid.
  * 
- * @author CAB302 
+ * @author CAB302, Torrin Griffiths, Damien Lancaster
  * @version 1.0
  */ 
 public class ContainerCode {
@@ -92,24 +92,29 @@ public class ContainerCode {
 	public ContainerCode(String code) throws InvalidCodeException {
 		//Implementation Here
 		Integer lengthCode = code.length();
+		//check if NULL
 		if (code == null || codeStr.equals("")){
 			throw new InvalidCodeException("no entry");
 		}//end if
+		//check Container length
 		else if (lengthCode > 11){
 			throw new InvalidCodeException("Container code is too long");
 		}  
 		else if (lengthCode < 11){
 			throw new InvalidCodeException("Container code is too short");
 		}//end if
+		//Check if its all uppercase
 		for (int i=0; i < 3; i++){
 			if (Character.isLowerCase(code.charAt(i))){
 				throw new InvalidCodeException("code is lowercase");
 			}//end if
 		}//end for
+		//check the category identifier code is U 
 		int idU =code.lastIndexOf("U");
 		if (idU != 3){
 			throw new InvalidCodeException("no identifier");
 		}// end if
+		//check if "Check digit" is correct using the sum
 		int[] charsint = new int[10];
 		//int letterNo = code.at(i) - 'A';
 		for (int i=0; i > 11; i++){
