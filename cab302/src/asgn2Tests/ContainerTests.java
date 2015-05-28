@@ -90,7 +90,7 @@ public class ContainerTests {
 	public void equalscorrect() throws InvalidCodeException {
 		String validcode = "MSCU6639871";
 		ContainerCode testcode = new ContainerCode(validcode);
-		ContainerCode testcode2 = new ContainerCode(validcode);
+		ContainerCode testcode2 = new ContainerCode(validcode); //double up on the code
 		assertTrue("test to see if it detects both have the same code", testcode.equals(testcode2));
 	}
 	
@@ -99,7 +99,7 @@ public class ContainerTests {
 		String validcode = "MSCU6639871";
 		String Validcode2 = "XMCU9157391";
 		ContainerCode testcode = new ContainerCode(validcode);
-		ContainerCode testcode2 = new ContainerCode(Validcode2);
+		ContainerCode testcode2 = new ContainerCode(Validcode2); //making sure it doesnt double up
 		assertFalse("test to see if it detects both have different code", testcode.equals(testcode2));
 	}
 	
@@ -217,8 +217,10 @@ public class ContainerTests {
 	public void DangerousGoodsContainerinvalidgrossweightmin() throws InvalidContainerException, InvalidCodeException{
 		ContainerCode ValidTestCode = new ContainerCode(validcode);
 		DangerousGoodsContainer invalidGGCmin = new DangerousGoodsContainer(ValidTestCode, 4, 0);
-	}
+	}//end of DangerousGoodsContainer test
 	
+	
+	//start of testing Refrigerated dangerous containers
 	@Test
 	public void RefrigeratedContainerGetCatergory() throws InvalidContainerException, InvalidCodeException{
 		ContainerCode ValidTestCode = new ContainerCode(validcode);
@@ -226,4 +228,5 @@ public class ContainerTests {
 		DangerousGoodsContainer validDC = new DangerousGoodsContainer(ValidTestCode,5,category );
 		assertTrue("test to see if returns correct category", category == validDC.getCategory());
 	}
+	//end of Refrigerated dangerous containers test
 }
