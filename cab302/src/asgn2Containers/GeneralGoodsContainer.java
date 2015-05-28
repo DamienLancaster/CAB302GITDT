@@ -12,7 +12,9 @@ import asgn2Exceptions.InvalidContainerException;
  * @version 1.0
  */
 public class GeneralGoodsContainer extends FreightContainer {
-
+	ContainerCode freightcode;
+	int weight;
+	//super (freightcode, weight);
 	/**
 	 * Constructs a general-purpose freight container object with the given
 	 * container code and gross weight.  See the constructor in class
@@ -25,6 +27,13 @@ public class GeneralGoodsContainer extends FreightContainer {
 	public GeneralGoodsContainer(ContainerCode code, Integer grossWeight)
 	throws InvalidContainerException {
 		//Implementation Here
+		super (code, grossWeight);
+		if (grossWeight < 5 || grossWeight > 29) {
+			throw new InvalidContainerException("invalid weight(must be between 4 and 30");
+		}
+		
+		freightcode = code;
+		weight = grossWeight;
 	}
 
 }

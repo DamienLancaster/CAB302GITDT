@@ -46,7 +46,9 @@ import asgn2Exceptions.InvalidContainerException;
  * @version 1.0
  */
 public class DangerousGoodsContainer extends FreightContainer {
-	
+	ContainerCode freightcode;
+	int weight;
+	int containercategory;
 
 	/**
 	 * Constructs a dangerous goods container object with the given
@@ -62,6 +64,14 @@ public class DangerousGoodsContainer extends FreightContainer {
 	public DangerousGoodsContainer(ContainerCode code, Integer grossWeight, Integer category)
 	throws InvalidContainerException {
 		//Implementation Here
+		super (code, grossWeight);
+		if (grossWeight < 5 || grossWeight > 29) {
+			throw new InvalidContainerException("invalid weight(must be between 4 and 30");
+		}
+		
+		freightcode = code;
+		weight = grossWeight;
+		containercategory = category;
 	}
 
 	/**
@@ -71,5 +81,6 @@ public class DangerousGoodsContainer extends FreightContainer {
 	 */
 	public Integer getCategory() {
 		//Implementation Here
+		return containercategory;
 	}
 }

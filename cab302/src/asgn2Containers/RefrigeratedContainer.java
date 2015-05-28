@@ -15,7 +15,9 @@ import asgn2Exceptions.InvalidContainerException;
  * @version 1.0
  */
 public class RefrigeratedContainer extends FreightContainer {
-
+	ContainerCode freightcode;
+	int weight;
+	int temp;
 	/**
 	 * Constructs a refrigerated goods container object with the given
 	 * container code, gross weight and desired temperature.  (In practice
@@ -33,6 +35,14 @@ public class RefrigeratedContainer extends FreightContainer {
 	public RefrigeratedContainer(ContainerCode code, Integer grossWeight, Integer temperature)
 	throws InvalidContainerException {
 		//Implementation Here
+		super (code, grossWeight);
+		if (grossWeight < 5 || grossWeight > 29) {
+			throw new InvalidContainerException("invalid weight(must be between 4 and 30");
+		}
+		
+		freightcode = code;
+		weight = grossWeight;
+		temp = temperature;
 	}
 
 	/**
@@ -45,6 +55,7 @@ public class RefrigeratedContainer extends FreightContainer {
 	 */
 	public Integer getTemperature() {
 		//Implementation Here
+		return temp;
 	}
 
 	/**
@@ -54,6 +65,7 @@ public class RefrigeratedContainer extends FreightContainer {
 	 */
 	public void setTemperature(Integer temperature) {
 		//Implementation Here
+		temp = temperature;
 	}
 
 }
