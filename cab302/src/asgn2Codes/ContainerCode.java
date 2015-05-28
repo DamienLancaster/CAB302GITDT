@@ -78,7 +78,7 @@ import asgn2Exceptions.InvalidCodeException;
  * @version 1.0
  */ 
 public class ContainerCode {
-
+	String codeStr;
 
 	/**
 	 * Constructs a new container code.
@@ -90,70 +90,67 @@ public class ContainerCode {
 	 * of six digits; or if the Check Digit is incorrect.
 	 */
 	public ContainerCode(String code) throws InvalidCodeException {
-			//Check if string is null
-		private boolean strNull(String code){
-			String codeStr = code;
-			if (codeStr != null && !codeStr.equals("")){
-				return true;
+		//Implementation Here
+		Integer lengthCode = code.length();
+		if (code == null || codeStr.equals("")){
+			throw new InvalidCodeException("no entry");
+		}//end if
+		else if (lengthCode > 11){
+			throw new InvalidCodeException("Container code is too long");
+		}  
+		else if (lengthCode < 11){
+			throw new InvalidCodeException("Container code is too short");
+		}//end if
+		for (int i=0; i < 3; i++){
+			if (Character.isLowerCase(code.charAt(i))){
+				throw new InvalidCodeException("code is lowercase");
 			}//end if
-			return false;
+		}//end for
+		int idU =code.lastIndexOf("U");
+		if (idU != 3){
+			throw new InvalidCodeException("no identifier");
+		}// end if
+		int[] charsint = new int[10];
+		//int letterNo = code.at(i) - 'A';
+		for (int i=0; i > 11; i++){
+			char a_char = code.charAt(i);
+			charsint[i] = (int) a_char;
 		}
-		
-		//check if the string is 11 char
-		private static boolean lengthChecker(String code){
-			String ConCode = code;
-			int lengthCode = ConCode.length();
-				if (lengthCode > 11){
-					System.out.println("Container code is too long")
-					return false;
-				}  
-				else (lengthCode < 11){
-					System.out.println("Container code is too short")
-					return false;
-				}//end if
-				return true; 
-				}
-		
-		//check if the First three letters are upper case
-		private static boolean upChecker(String code){
+		Integer total = 0;
+		for (int i=0; i > 10; i++){
+			if (i < 5){
+				total = total + charsint[i] - 65;
+			}
+			if (i>4) {
+				total = total + charsint[i] - 48;
+			}
+		}
+		String totalstr = total.toString();
+		int smallestnumber = 9;
+		int[] totalint = null;
+		for (int i=0; i > totalstr.length(); i++){
+			char a_char = totalstr.charAt(i);
 			
-			for (int i=0; i < 3; i++){
-				if (!Character.isuppercase(code.charAt(i))){
-					return false 
-				}//end if
-			}//end for
-			return true;
-		}
+			if (smallestnumber > (int)a_char) {
+				smallestnumber = (int)a_char;
+			}
+			//totalint[i] = (int) a_char;
 			
-		//Check if the identifier is a U
-		private static boolean findU (String code){
-			String Ufind = code;
-			int idU =ufind.lastIndexOf("U");
-			if (idU != 3){
-				return false;
-			}// end if
-			return true;
 		}
-		
-		//Check if the number has 6 digiets
-		private static boolean sixDigiet (String code){
-			
-			for (int 1=5; i <11; i++){
-				if (!isdigit(code.at(i))){
-					return false;
-				}//end if
-			}//end for
-			return true;
+		if (charsint[10] != smallestnumber) {
+			throw new InvalidCodeException("check digit is not correct");
 		}
+		codeStr = code;
 	}
 
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
-	@Override
+	//@Override
 	public String toString() {
 		//Implementation Here
+		return codeStr;
 	}
 
 	
@@ -167,6 +164,12 @@ public class ContainerCode {
 	 */
 	@Override
 	public boolean equals(Object obj) {
+		if (codeStr == obj.toString()) {
+			return true;
+		}
+		else{
+		return false;
+		}
 		//Implementation Here
 	}
 }
