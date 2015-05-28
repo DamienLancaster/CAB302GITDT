@@ -90,7 +90,61 @@ public class ContainerCode {
 	 * of six digits; or if the Check Digit is incorrect.
 	 */
 	public ContainerCode(String code) throws InvalidCodeException {
-		//Implementation Here
+			//Check if string is null
+		private boolean strNull(String code){
+			String codeStr = code;
+			if (codeStr != null && !codeStr.equals("")){
+				return true;
+			}//end if
+			return false;
+		}
+		
+		//check if the string is 11 char
+		private static boolean lengthChecker(String code){
+			String ConCode = code;
+			int lengthCode = ConCode.length();
+				if (lengthCode > 11){
+					System.out.println("Container code is too long")
+					return false;
+				}  
+				else (lengthCode < 11){
+					System.out.println("Container code is too short")
+					return false;
+				}//end if
+				return true; 
+				}
+		
+		//check if the First three letters are upper case
+		private static boolean upChecker(String code){
+			
+			for (int i=0; i < 3; i++){
+				if (!Character.isuppercase(code.charAt(i))){
+					return false 
+				}//end if
+			}//end for
+			return true;
+		}
+			
+		//Check if the identifier is a U
+		private static boolean findU (String code){
+			String Ufind = code;
+			int idU =ufind.lastIndexOf("U");
+			if (idU != 3){
+				return false;
+			}// end if
+			return true;
+		}
+		
+		//Check if the number has 6 digiets
+		private static boolean sixDigiet (String code){
+			
+			for (int 1=5; i <11; i++){
+				if (!isdigit(code.at(i))){
+					return false;
+				}//end if
+			}//end for
+			return true;
+		}
 	}
 
 
